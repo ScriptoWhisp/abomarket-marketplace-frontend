@@ -35,6 +35,6 @@ deploy:
     - chmod 700 ~/.ssh
     - ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
   script:
-    - ssh $SERVER_USER@$SERVER_IP "cd /home/ubuntu && docker compose down && docker compose pull && docker compose up -d --remove-orphans"
+    - ssh $SERVER_USER@$SERVER_IP "cd /home/ubuntu/vite-project && docker compose down && docker compose pull && docker compose up -d --remove-orphans"
   only:
     - main
