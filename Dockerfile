@@ -1,11 +1,18 @@
-# Build stage
-FROM node:latest AS build-stage
+# Use a base node image
+FROM node:18-alpine
+
+# Set the working directory inside the container
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci
+
+# Copy the package.json and install dependencies
+COPY package.json package-lock.json ./
+RUN npm install
+
+# Copy the rest of the application
 COPY . .
-RUN npm run build
-FROM nginx:alpine
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+
+# Expose the port that Vite will run on (default 5173)
 EXPOSE 3000
-CMD ["nginx", "-g", "daemon off;"]
+
+# Command to start Vite
+CMD ["npm", "run", "dev"]
