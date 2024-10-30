@@ -1,7 +1,7 @@
 <script setup>
 
 import Footer from "@/components/Footer.vue";
-import HeaderPopover from "@/components/HeaderPopover.vue";
+import HeaderPopover from "@/components/Header.vue";
 import ProductList from "@/components/ProductList.vue";
 
 </script>
