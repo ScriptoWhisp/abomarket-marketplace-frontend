@@ -11,5 +11,7 @@ export default {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+      import('@tailwindcss/aspect-ratio')
+  ],
 }
