@@ -50,7 +50,6 @@ import { ref } from 'vue'
 import {
   Dialog,
   DialogPanel,
-  PopoverGroup,
 } from '@headlessui/vue'
 import {
   Bars3Icon,
@@ -62,8 +61,3 @@ import SearchBar from '@/components/SearchBar.vue'
 
 const mobileMenuOpen = ref(false)
 </script>
-
-
-<style scoped>
-
-</style>
