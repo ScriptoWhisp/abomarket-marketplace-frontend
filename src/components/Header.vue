@@ -1,21 +1,22 @@
 <template>
   <div id="header">
-    <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-      <div class="flex lg:flex-1 items-center">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
+      <div class="hidden lg:flex justify-left items-center">
         <router-link to="/" class="absolute font-extrabold text-white text-5xl">abo.</router-link>
       </div>
-      <div class="flex lg:hidden">
+      <div class="justify-self-center items-center lg:w-1/2 w-full">
+        <SearchBar/>
+      </div>
+      <div class="hidden lg:flex justify-right items-center">
+        <router-link to="/" class="absolute text-sm font-semibold text-white">Account</router-link>
+      </div>
+
+      <div class="pl-2 flex lg:hidden">
         <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white" @click="mobileMenuOpen = true">
           <span class="sr-only">Open main menu</span>
           <Bars3Icon class="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
-      <PopoverGroup class="hidden lg:flex lg:gap-x-12">
-
-        <router-link to="/" class="text-sm font-semibold leading-6 text-white">placeholder</router-link>
-        <router-link to="/" class="text-sm font-semibold leading-6 text-white">placeholder</router-link>
-        <router-link to="/" class="text-sm font-semibold leading-6 text-white">placeholder</router-link>
-      </PopoverGroup>
     </nav>
     <Dialog class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
       <div class="fixed inset-0 z-10" />
@@ -48,19 +49,14 @@ import { ref } from 'vue'
 import {
   Dialog,
   DialogPanel,
-  PopoverGroup,
 } from '@headlessui/vue'
 import {
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
+import SearchBar from '@/components/SearchBar.vue'
 
 
 
 const mobileMenuOpen = ref(false)
 </script>
-
-
-<style scoped>
-
-</style>

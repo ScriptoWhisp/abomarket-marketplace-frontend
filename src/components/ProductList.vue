@@ -6,7 +6,7 @@ import axios from "axios";
 const productImg = 'https://www.diskmat.ee/raamat12.gif'
 const products = ref([]);
 const currentPage = ref(1);
-const pageSize = 4;
+const pageSize = 10;
 const totalPages = ref(1);
 
 const error = ref('');
@@ -87,7 +87,3 @@ onMounted(fetchProducts);
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>
