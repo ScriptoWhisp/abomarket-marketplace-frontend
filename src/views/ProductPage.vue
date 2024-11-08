@@ -59,13 +59,13 @@ onMounted(fetchProduct);
 
 
   <body>
-  <div class="w-10/12 m-auto">
-    <img class="inline h-auto w-1/2" :src="productImg" alt="description">
-    <h2 class="text-black text-5xl ml-20 mb-10">{{product.name}}</h2>
-    <h3 class="text-black text-4xl ml-20 mb-10">Category: {{category}}</h3>
-    <h4 class="text-black text-4xl ml-20 mb-10">Seller: {{seller.firstName}} </h4>
-    <h5 class="text-black text-4xl ml-20 mb-10 w-3/12">Price: {{product.price}}</h5>
-    <p class="text-black text-2xl ml-20 mb-10">{{product.description}}</p>
+  <div class="w-10/12 m-auto columns-2">
+      <img class="inline h-auto w-1/2" :src="productImg" alt="description">
+      <h2 class="text-black text-5xl ml-20 mb-10">{{product.name}}</h2>
+      <h3 class="text-black text-4xl ml-20 mb-10">Category: {{category}}</h3>
+      <a :href="'/user/' + seller.id + '/products'"><h4 class="text-black text-4xl ml-20 mb-10">Seller: {{seller.firstName}} (click to see other products) </h4></a>
+      <h5 class="text-black text-4xl ml-20 mb-10 w-3/12">Price: {{product.price}}</h5>
+      <p class="text-black text-2xl ml-20 mb-10">{{product.description}}</p>
   </div>
 
   </body>

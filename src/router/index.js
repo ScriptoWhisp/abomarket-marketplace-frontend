@@ -5,6 +5,7 @@ import About from '@/views/About.vue';
 import Login from '@/views/Login.vue';
 import UserPage from "@/views/UserPage.vue";
 import ProductPage from "@/views/ProductPage.vue";
+import UserProductsPage from "@/views/UserProductsPage.vue";
 
 const routes = [
     {
@@ -26,6 +27,12 @@ const routes = [
         path: '/user',
         name: 'User',
         component: UserPage
+    },
+    {
+      path: '/user/:id/products',
+      name: 'UserProducts',
+      component: UserProductsPage,
+      props: true
     },
     {
         path: '/product/:id',
