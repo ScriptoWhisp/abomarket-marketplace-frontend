@@ -35,6 +35,12 @@ const routes = [
       props: true
     },
     {
+      path: '/user/products',
+      name: 'UserOwnProducts',
+        component: UserProductsPage,
+
+    },
+    {
         path: '/product/:id',
         name: 'Product',
         component: ProductPage,

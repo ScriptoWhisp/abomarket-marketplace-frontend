@@ -2,10 +2,15 @@
 
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { getUserIdFromToken } from "@/helpers/JWTHelper";
 
 const props = defineProps({
   id: String
 });
+
+const token = localStorage.getItem('user_token');
+const userId = getUserIdFromToken(token);
+console.log(userId);
 
 
 const productImg = 'https://www.diskmat.ee/raamat12.gif'
@@ -58,12 +63,12 @@ onMounted(fetchProducts);
       <!-- filter stuff goes here -->
 
       <!-- and here it ends -->
-
       <div v-if="products.length === 0 || error" class="text-2xl text-gray-500 text-center">Nothing to show</div>
 
       <div v-else>
         <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          <a v-for="product in products" :key="product.id" :href="'/product/' + product.id" class="group">
+          <div v-for="product in products">
+          <a :key="product.id" :href="'/product/' + product.id" class="group">
 
             <div
                 class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
@@ -73,7 +78,10 @@ onMounted(fetchProducts);
             <p class="mt-1 text-lg font-medium text-gray-900">{{ product.price }}</p>
             <h3 class="text-sm text-gray-700">{{ product.name }}</h3>
           </a>
-        </div>
+
+            <button v-if="userId == props.id" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Edit</button>
+          </div>
+          </div>
 
         <div class="flex flex-col items-center mt-10">
           <!-- Help text -->

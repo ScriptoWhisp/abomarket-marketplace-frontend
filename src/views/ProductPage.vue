@@ -2,10 +2,15 @@
 import HeaderPopover from "@/components/Header.vue";
 import {onMounted, ref} from "vue";
 import axios from "axios";
+import {getUserIdFromToken} from "@/helpers/JWTHelper.js";
 
 const props = defineProps({
   id: String
 });
+
+const token = localStorage.getItem('user_token');
+const userId = getUserIdFromToken(token);
+console.log(userId);
 
 const product = ref({});
 const category = ref("");
@@ -59,7 +64,7 @@ onMounted(fetchProduct);
 
 
   <body>
-  <div class="w-10/12 m-auto columns-2">
+  <div class="w-10/12 m-auto columns-2" v-if="seller.id != userId">
       <img class="inline h-auto w-1/2" :src="productImg" alt="description">
       <h2 class="text-black text-5xl ml-20 mb-10">{{product.name}}</h2>
       <h3 class="text-black text-4xl ml-20 mb-10">Category: {{category}}</h3>
@@ -67,6 +72,22 @@ onMounted(fetchProduct);
       <h5 class="text-black text-4xl ml-20 mb-10 w-3/12">Price: {{product.price}}</h5>
       <p class="text-black text-2xl ml-20 mb-10">{{product.description}}</p>
   </div>
+  <div class="w-10/12 m-auto columns-2" v-else>
+    <h1>Editing product</h1>
+    <img class="inline h-auto w-1/2" :src="productImg" alt="description">
+    <label for="product-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+    <input type="text" id="product-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="product.name">
+    <label for="product-price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+    <input type="text" id="product-price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="product.price">
+    <label for="product-description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+    <textarea id="product-description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="product.description"></textarea>
+    <label for="product-category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category Id</label>
+    <input type="text" id="product-category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :value="product.categoryId">
+
+    <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Save</button>
+
+  </div>
+
 
   </body>
 </template>
