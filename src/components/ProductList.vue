@@ -19,6 +19,7 @@ const fetchProducts = async () => {
       id: product.id,
       name: product.name,
       price: product.price,
+      imageURL: product.imageUrl
     }));
     totalPages.value = response.data.totalPages;
   } catch (err) {
@@ -61,7 +62,8 @@ onMounted(fetchProducts);
           <a v-for="product in products" :key="product.id" :href="'/product/' + product.id" class="group">
 
             <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-              <img :src="productImg" :alt="productImg" class="h-full w-full object-cover object-center group-hover:opacity-75" />
+              <img v-if="product.imageURL" :src="product.imageURL" :alt="productImg" class="h-full w-full object-cover object-center group-hover:opacity-75" />
+              <img v-else :src="productImg" :alt="productImg" class="h-full w-full object-cover object-center group-hover:opacity-75" />
             </div>
             <p class="mt-1 text-lg font-medium text-gray-900">{{ product.price }}</p>
             <h3 class="text-sm text-gray-700">{{ product.name }}</h3>

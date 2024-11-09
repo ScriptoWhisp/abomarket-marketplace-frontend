@@ -6,6 +6,7 @@ import Login from '@/views/Login.vue';
 import UserPage from "@/views/UserPage.vue";
 import ProductPage from "@/views/ProductPage.vue";
 import UserProductsPage from "@/views/UserProductsPage.vue";
+import ProductCreatePage from "@/views/ProductCreatePage.vue";
 
 const routes = [
     {
@@ -34,11 +35,16 @@ const routes = [
       component: UserProductsPage,
       props: true
     },
+    // {
+    //   path: '/user/products',
+    //   name: 'UserOwnProducts',
+    //   component: UserProductsPage
+    //
+    // },
     {
-      path: '/user/products',
-      name: 'UserOwnProducts',
-      component: UserProductsPage
-
+        path: '/user/createproduct',
+        name: 'CreateProduct',
+        component: ProductCreatePage
     },
     {
         path: '/product/:id',
