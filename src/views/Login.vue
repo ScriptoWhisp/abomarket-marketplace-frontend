@@ -11,20 +11,26 @@ const router = useRouter();
 const isRegister = ref(false);
 
 const login = async () => {
+
+  localStorage.removeItem('user_token');
+  localStorage.removeItem('id');
+
   try {
 
-    const response = await axios.post('api/public/login', {
+    const response = await axios.post('/api/public/login', {
       email: email.value,
       password: password.value,
     });
 
     error.value = response.data.error;
 
-    const token = response.data.jwttoken;
+    const token = response.data.jwtToken;
+    const id = response.data.id;
 
     localStorage.setItem('user_token', token);
+    localStorage.setItem('id', id);
 
-    router.push('/');
+    await router.push('/');
 
   } catch (err) {
     error.value = 'Invalid email or password';
@@ -32,6 +38,7 @@ const login = async () => {
 };
 
 const register = async () => {
+
   try {
 
     await axios.post('api/users', {
@@ -39,7 +46,7 @@ const register = async () => {
       password: password.value,
     });
 
-    router.push('/login');
+    await router.push('/login');
 
   } catch (err) {
     error.value = 'Invalid email or password';
@@ -51,7 +58,7 @@ const register = async () => {
 <template>
   <body class="bg-white">
 
-    <div v-if="error" class="error-message">{{ error }}</div>
+    <div v-if="error" class="error-message text-black">{{ error }}</div>
 
 
     <div v-if="isRegister" class="flex min-h-full flex-col content-center justify-center px-6 py-12 lg:px-8">

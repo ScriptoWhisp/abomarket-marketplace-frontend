@@ -1,3 +1,35 @@
+<script setup>
+import { ref } from 'vue'
+import {
+  Dialog,
+  DialogPanel,
+} from '@headlessui/vue'
+import {
+  Bars3Icon,
+  XMarkIcon,
+} from '@heroicons/vue/24/outline'
+import SearchBar from '@/components/SearchBar.vue'
+import {useRouter} from "vue-router";
+
+
+const router = useRouter();
+
+const toPage = () => {
+  const isLoggedIn = !!localStorage.getItem('user_token') && !!localStorage.getItem('id');
+  if (isLoggedIn) {
+    router.push('/user');
+    return;
+  }
+
+  router.push('/login');
+}
+
+
+
+const mobileMenuOpen = ref(false)
+</script>
+
+
 <template>
   <div id="header">
     <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
@@ -8,7 +40,7 @@
         <SearchBar/>
       </div>
       <div class="hidden lg:flex justify-right items-center">
-        <router-link to="/" class="absolute text-sm font-semibold text-white">Account</router-link>
+        <a @click="toPage" class="absolute text-sm font-semibold text-white">Account</a>
       </div>
 
       <div class="pl-2 flex lg:hidden">
@@ -44,19 +76,3 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import {
-  Dialog,
-  DialogPanel,
-} from '@headlessui/vue'
-import {
-  Bars3Icon,
-  XMarkIcon,
-} from '@heroicons/vue/24/outline'
-import SearchBar from '@/components/SearchBar.vue'
-
-
-
-const mobileMenuOpen = ref(false)
-</script>
