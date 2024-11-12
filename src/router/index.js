@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/views/Home.vue';
 import About from '@/views/About.vue';
 import Login from '@/views/Login.vue';
+import UserPage from '@/views/UserPage.vue';
 
 const routes = [
     {
