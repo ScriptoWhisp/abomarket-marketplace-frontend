@@ -4,6 +4,10 @@ import Home from '@/views/Home.vue';
 import About from '@/views/About.vue';
 import Login from '@/views/Login.vue';
 import UserPage from '@/views/UserPage.vue';
+import UserProductsPage from '@/views/UserProductsPage.vue';
+import ProductCreatePage from '@/views/ProductCreatePage.vue';
+import ProductPage from '@/views/ProductPage.vue';
+
 
 const routes = [
     {

@@ -13,7 +13,6 @@ const isRegister = ref(false);
 const login = async () => {
 
   localStorage.removeItem('user_token');
-  localStorage.removeItem('id');
 
   try {
 
@@ -22,13 +21,15 @@ const login = async () => {
       password: password.value,
     });
 
+
+    console.log(response.data);
     error.value = response.data.error;
 
-    const token = response.data.jwtToken;
-    const id = response.data.id;
+
+
+    const token = response.data.jwttoken;
 
     localStorage.setItem('user_token', token);
-    localStorage.setItem('id', id);
 
     await router.push('/');
 

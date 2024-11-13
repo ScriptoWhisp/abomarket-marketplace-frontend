@@ -15,8 +15,7 @@ import {useRouter} from "vue-router";
 const router = useRouter();
 
 const toPage = () => {
-  const isLoggedIn = !!localStorage.getItem('user_token') && !!localStorage.getItem('id');
-  if (isLoggedIn) {
+  if (!!localStorage.getItem('user_token')) {
     router.push('/user');
     return;
   }
@@ -34,13 +33,13 @@ const mobileMenuOpen = ref(false)
   <div id="header">
     <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
       <div class="hidden lg:flex justify-left items-center">
-        <router-link to="/" class="absolute font-extrabold text-white text-5xl">abo.</router-link>
+        <router-link to="/" class="font-extrabold text-white text-5xl">abo.</router-link>
       </div>
       <div class="justify-self-center items-center lg:w-1/2 w-full">
         <SearchBar/>
       </div>
       <div class="hidden lg:flex justify-right items-center">
-        <a @click="toPage" class="absolute text-sm font-semibold text-white">Account</a>
+        <a href="#" @click="toPage" class="text-sm font-semibold text-white text-right">Account</a>
       </div>
 
       <div class="pl-2 flex lg:hidden">
@@ -63,9 +62,7 @@ const mobileMenuOpen = ref(false)
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
             <div class="space-y-2 py-6">
-              <router-link to="/" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Features</router-link>
-              <router-link to="/" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Marketplace</router-link>
-              <router-link to="/" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Company</router-link>
+              <a href="#" @click="toPage" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Account</a>
             </div>
             <div class="py-6">
               <router-link to="/" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</router-link>
