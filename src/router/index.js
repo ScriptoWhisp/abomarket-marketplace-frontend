@@ -8,6 +8,7 @@ import UserProductsPage from '@/views/UserProductsPage.vue';
 import ProductCreatePage from '@/views/ProductCreatePage.vue';
 import ProductPage from '@/views/ProductPage.vue';
 import ForeignUser from '@/views/ForeignUser.vue';
+import ForeignUsers from "@/views/ForeignUsers.vue";
 
 
 const routes = [
@@ -59,6 +60,12 @@ const routes = [
         path: '/user/:id',
         name: 'ForeignUser',
         component: ForeignUser,
+        props: true
+    },
+    {
+        path: '/users',
+        name: 'Users',
+        component: ForeignUsers
     }
 ];
 
