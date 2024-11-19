@@ -30,7 +30,7 @@ const getUsersData = async () => {
   }
 
   try {
-    const response = await axios.get('api/users/profile');
+    const response = await axios.get('/api/users/profile');
     console.log(response.data);
     email.value = response.data.email;
     firstName.value = response.data.firstName;
@@ -85,12 +85,6 @@ onMounted(getUsersData)
 </script>
 
 <template>
-
-
-  <header>
-    <HeaderPopover/>
-  </header>
-
 
   <body>
   <div v-if="error" class="error-message">{{ error }}</div>
