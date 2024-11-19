@@ -1,7 +1,5 @@
 <script setup>
 
-import HeaderPopover from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
 import axios from "axios";
 import {onMounted, ref} from "vue";
 import { useRouter } from 'vue-router';
@@ -54,7 +52,7 @@ const getUsersData = async () => {
 
 const updateData = async () => {
   try {
-    const response = await axios.patch('api/users/profile', {
+    const response = await axios.patch('/api/users/profile', {
       email: email.value,
       firstName: firstName.value,
       lastName: lastName.value,
