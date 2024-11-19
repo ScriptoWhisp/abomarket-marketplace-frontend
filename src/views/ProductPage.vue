@@ -62,6 +62,7 @@ const updateProduct = async () => {
       price: product.value.price,
       description: product.value.description,
       categoryId: product.value.categoryId,
+      sellerId: product.value.sellerId,
       imageUrl: productImg
     });
     console.log(response);
