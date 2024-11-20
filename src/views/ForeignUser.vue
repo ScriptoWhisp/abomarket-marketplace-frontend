@@ -44,7 +44,7 @@ onMounted(getForeignUsersData)
     <div class="py-5 px-5 sm:px-20 col-start-2 col-span-3">
       <div class="px-4 sm:px-0">
         <h3 class="text-base/7 font-semibold text-gray-900">User Information</h3>
-        <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">Personal details and application.</p>
+        <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">Personal details</p>
       </div>
       <div class="mt-6 border-t border-gray-100">
         <dl class="divide-y divide-gray-100">
