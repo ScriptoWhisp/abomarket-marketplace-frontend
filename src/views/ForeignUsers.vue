@@ -29,12 +29,12 @@ const fetchUsers = async () => {
 
 const nextPage = () => {
   currentPage.value++;
-  fetchProducts();
+  fetchUsers();
 };
 
 const previousPage = () => {
   currentPage.value--;
-  fetchProducts();
+  fetchUsers();
 };
 
 onMounted(fetchUsers);
