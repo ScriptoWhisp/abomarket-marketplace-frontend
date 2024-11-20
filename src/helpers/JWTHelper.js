@@ -6,7 +6,6 @@ export function getUserIdFromToken(token) {
         const decodedToken = jwtDecode(token);
         return decodedToken.userId; // Access the `userId` claim
     } catch (error) {
-        console.error("Failed to decode JWT", error);
-        return null;
+        return -1;
     }
 }
