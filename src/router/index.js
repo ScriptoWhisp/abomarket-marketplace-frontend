@@ -7,6 +7,8 @@ import UserPage from '@/views/UserPage.vue';
 import UserProductsPage from '@/views/UserProductsPage.vue';
 import ProductCreatePage from '@/views/ProductCreatePage.vue';
 import ProductPage from '@/views/ProductPage.vue';
+import ForeignUser from '@/views/ForeignUser.vue';
+import ForeignUsers from "@/views/ForeignUsers.vue";
 
 
 const routes = [
@@ -18,7 +20,8 @@ const routes = [
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: { hideHeaderFooter: true }
     },
     {
         path: '/about',
@@ -52,6 +55,17 @@ const routes = [
         name: 'Product',
         component: ProductPage,
         props: true
+    },
+    {
+        path: '/user/:id',
+        name: 'ForeignUser',
+        component: ForeignUser,
+        props: true
+    },
+    {
+        path: '/users',
+        name: 'Users',
+        component: ForeignUsers
     }
 ];
 

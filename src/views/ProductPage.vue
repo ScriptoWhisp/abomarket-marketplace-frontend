@@ -1,5 +1,4 @@
 <script setup>
-import HeaderPopover from "@/components/Header.vue";
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import {getUserIdFromToken} from "@/helpers/JWTHelper.js";
@@ -92,9 +91,6 @@ onMounted(fetchProduct);
 </script>
 
 <template>
-  <header class="bg-black w-full">
-    <HeaderPopover/>
-  </header>
 
 
   <body>
