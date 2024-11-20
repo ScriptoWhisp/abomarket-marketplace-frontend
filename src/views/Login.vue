@@ -25,11 +25,13 @@ const login = async () => {
     console.log(response.data);
     error.value = response.data.error;
 
-
-
     const token = response.data.jwttoken;
 
     localStorage.setItem('user_token', token);
+
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    }
 
     await router.push('/');
 
@@ -40,6 +42,8 @@ const login = async () => {
 
 const register = async () => {
 
+  localStorage.removeItem('user_token');
+
   try {
 
     await axios.post('api/users', {
@@ -47,7 +51,7 @@ const register = async () => {
       password: password.value,
     });
 
-    await router.push('/login');
+    await login()
 
   } catch (err) {
     error.value = 'Invalid email or password';
