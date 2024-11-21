@@ -122,7 +122,7 @@ onMounted(fetchProduct);
     <button type="button" @click="deleteProduct" data-modal-target="static-modal" data-modal-toggle="static-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
       Delete
     </button>
-    <ErrorAlert class="mt-5" v-if="error" :message="'error while ' + errorOperation + ': ' + error.message"/>
+    <ErrorAlert class="mt-5" v-if="error.message" :message="'error while ' + errorOperation + ': ' + error.message"/>
 
   </div>
   </body>
