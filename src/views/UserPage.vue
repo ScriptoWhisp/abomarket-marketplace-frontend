@@ -3,6 +3,7 @@
 import axios from "axios";
 import {onMounted, ref} from "vue";
 import { useRouter } from 'vue-router';
+import UserProfileSide from "@/components/UserProfileSide.vue";
 
 const email = ref('');
 const firstName = ref('');
@@ -65,11 +66,6 @@ const updateData = async () => {
   }
 }
 
-const logout = async () => {
-  localStorage.removeItem('user_token');
-  await router.push('/');
-}
-
 const resetForm = () => {
   email.value = initialEmail.value;
   firstName.value = initialFirstName.value;
@@ -88,25 +84,7 @@ onMounted(getUsersData)
   <div v-if="error" class="error-message">{{ error }}</div>
 
   <div class="flex justify-left h-dvh">
-      <div class="h-full p-5 bg-gray-200 w-1/4">
-        <ul class="space-y-2 font-medium origin-top">
-          <li>
-            <a href="/user/profile" class="flex items-center p-2 text-gray-900 rounded-lg focus:bg-gray-300 hover:bg-gray-300 group">
-              <span class="ms-3">Profile</span>
-            </a>
-          </li>
-          <li>
-            <a href="/user/createproduct" class="flex items-center p-2 text-gray-900 rounded-lg focus:bg-gray-300 hover:bg-gray-300 group">
-              <span class="ms-3">Create Product</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" v-on:click="logout" class="flex items-center p-2 text-gray-900 rounded-lg focus:bg-gray-300 hover:text-white hover:bg-red-500 group">
-              <span class="ms-3">Logout</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <UserProfileSide/>
       <div class="bg-white w-3/4 lg:w-1/2">
         <form @submit.prevent="updateData">
           <div class="p-5 space-y-12">

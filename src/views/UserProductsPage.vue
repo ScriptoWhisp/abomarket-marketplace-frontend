@@ -59,15 +59,20 @@ onMounted(fetchProducts);
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 
 
-      <h2 class="text-black text-5xl mb-10">Products</h2>
+      <h2 class="text-black text-5xl">Products</h2>
 
       <!-- filter stuff goes here -->
 
       <!-- and here it ends -->
+
+      <div v-if="userId == props.id" class="flex justify-start">
+        <router-link to="/user" class="text-black text-left hover:underline">Back to profile</router-link>
+      </div>
+
       <div v-if="products.length === 0 || error" class="text-2xl text-gray-500 text-center">Nothing to show</div>
 
       <div v-else>
-        <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+        <div class="grid grid-cols-1 gap-x-6 gap-y-10 mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           <div v-for="product in products">
           <a :key="product.id" :href="'/product/' + product.id" class="group">
 
