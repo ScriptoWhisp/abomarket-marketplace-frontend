@@ -61,7 +61,6 @@ const filterByCategory = (categoryId) => {
 };
 
 const selectSortOption = (option) => {
-  // Обновляем сортировку в зависимости от выбора
   switch (option) {
     case 'new-first':
       activeSort.value = 'productId';
