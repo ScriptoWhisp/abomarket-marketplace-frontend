@@ -3,6 +3,7 @@ import HeaderPopover from "@/components/Header.vue";
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import {getUserIdFromToken} from "@/helpers/JWTHelper.js";
+import ErrorAlert from "@/components/ErrorAlert.vue";
 
 const props = defineProps({
   id: String
@@ -13,7 +14,7 @@ const userId = getUserIdFromToken(token);
 console.log(userId);
 
 const product = ref({});
-const error = ref('');
+const errorObj = ref({});
 
 const createProduct = async () => {
   try {
@@ -29,7 +30,7 @@ const createProduct = async () => {
     console.log('Product created');
     window.location.href = userId + `/products`;
   } catch (err) {
-    error.value = 'Error creating products: ' + err.message;
+    errorObj.value = err.response.data;
   }
 };
 
@@ -56,7 +57,9 @@ const createProduct = async () => {
     <label for="product-image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image URL</label>
     <input type="text" id="product-image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="product.imageURL">
     <button @click="createProduct" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create</button>
+    <ErrorAlert class="mt-5" v-if="errorObj.message" :message="errorObj.message"/>
   </div>
+
 
 
   </body>

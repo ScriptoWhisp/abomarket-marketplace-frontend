@@ -3,6 +3,7 @@ import HeaderPopover from "@/components/Header.vue";
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import {getUserIdFromToken} from "@/helpers/JWTHelper.js";
+import ErrorAlert from "@/components/ErrorAlert.vue";
 
 const props = defineProps({
   id: String
@@ -16,7 +17,8 @@ const product = ref({});
 const category = ref("");
 const seller = ref({});
 let productImg = 'https://www.diskmat.ee/raamat12.gif'
-const error = ref('');
+const error = ref({});
+const errorOperation = ref('');
 
 
 const fetchProduct = async () => {
@@ -29,7 +31,8 @@ const fetchProduct = async () => {
     await fetchCategory();
     await fetchSellerName();
   } catch (err) {
-    error.value = 'Error fetching products: ' + err.message;
+    error.value = err.response.data;
+    errorOperation.value = 'fetching product';
   }
 };
 
@@ -39,7 +42,8 @@ const fetchCategory = async () => {
     console.log(response);
     category.value = response.data.name;
   } catch (err) {
-    error.value = 'Error fetching products: ' + err.message;
+    error.value = err.response.data;
+    errorOperation.value = 'fetching category';
   }
 };
 
@@ -50,7 +54,8 @@ const fetchSellerName = async () => {
     console.log(response);
     seller.value = response.data;
   } catch (err) {
-    error.value = 'Error fetching products: ' + err.message;
+    error.value = err.response.data;
+    errorOperation.value = 'fetching seller';
   }
 };
 
@@ -67,12 +72,10 @@ const updateProduct = async () => {
     });
     console.log(response);
     console.log('Product updated');
-    window.location.href = '/';
   } catch (err) {
-    error.value = 'Error updating products: ' + err.message;
+    error.value = err.response.data;
+    errorOperation.value = 'updating product';
   }
-
-  window.location.href = '/';
 };
 
 const deleteProduct = async () => {
@@ -82,10 +85,9 @@ const deleteProduct = async () => {
     console.log('Product deleted');
     window.location.href = '/';
   } catch (err) {
-    error.value = 'Error deleting products: ' + err.message;
+    error.value = err.response.data;
+    errorOperation.value = 'deleting product';
   }
-
-  window.location.href = '/';
 };
 
 onMounted(fetchProduct);
@@ -120,11 +122,12 @@ onMounted(fetchProduct);
     <label for="product-image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image URL</label>
     <input type="text" id="product-image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="productImg">
     <button @click="updateProduct" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Save</button>
-
     <!-- Delete product -->
     <button type="button" @click="deleteProduct" data-modal-target="static-modal" data-modal-toggle="static-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
       Delete
     </button>
+    <ErrorAlert class="mt-5" v-if="error" :message="'error while ' + errorOperation + ': ' + error.message"/>
+
   </div>
   </body>
 </template>
