@@ -3,6 +3,7 @@ import {onMounted, ref} from "vue";
 import axios from "axios";
 import {getUserIdFromToken} from "@/helpers/JWTHelper.js";
 import UserProfileSide from "@/components/UserProfileSide.vue";
+import ErrorAlert from "@/components/ErrorAlert.vue";
 
 const props = defineProps({
   id: String
@@ -13,7 +14,7 @@ const userId = getUserIdFromToken(token);
 console.log(userId);
 
 const product = ref({});
-const error = ref('');
+const errorObj = ref({});
 
 const createProduct = async () => {
   try {
@@ -29,7 +30,7 @@ const createProduct = async () => {
     console.log('Product created');
     window.location.href = userId + `/products`;
   } catch (err) {
-    error.value = 'Error creating products: ' + err.message;
+    errorObj.value = err.response.data;
   }
 };
 
@@ -39,6 +40,7 @@ const createProduct = async () => {
 <template>
 
   <body>
+<<<<<<< src/views/ProductCreatePage.vue
   <div class="flex justify-left h-dvh">
     <UserProfileSide />
     <div class="bg-white w-3/4 lg:w-1/2 p-5">
@@ -58,6 +60,26 @@ const createProduct = async () => {
     <div class="bg-white w-1/4"></div>
   </div>
 
+=======
+  <div class="w-10/12 m-auto columns-1">
+    <h1>creating product</h1>
+    <label for="product-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+    <input type="text" id="product-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="product.name">
+    <label for="product-price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+    <input type="text" id="product-price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="product.price">
+    <label for="product-description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+    <textarea id="product-description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="product.description"></textarea>
+    <label for="product-category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category Id</label>
+    <input type="text" id="product-category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="product.categoryId">
+    <label for="product-image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image URL</label>
+    <input type="text" id="product-image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" v-model="product.imageURL">
+    <button @click="createProduct" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create</button>
+    <ErrorAlert class="mt-5" v-if="errorObj.message" :message="errorObj.message"/>
+  </div>
+
+
+
+>>>>>>> src/views/ProductCreatePage.vue
   </body>
 </template>
 
