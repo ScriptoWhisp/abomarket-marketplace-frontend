@@ -16,5 +16,16 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  ssr: {
+    noExternal: ['@inertiajs/server',/\.css$/, /\?vue&type=style/, /^vuetify/],
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        secure: false,    }
+    }
   }
 })

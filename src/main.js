@@ -4,7 +4,12 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
-import './assets/main.css'
+
+const token = localStorage.getItem('user_token')
+
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+}
 
 const app = createApp(App)
 

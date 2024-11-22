@@ -1,12 +1,15 @@
 <script setup>
 
+import ProductList from "@/components/ProductList.vue";
+
 </script>
 
 <template>
-  <div>
-    <h1>Home</h1>
-  </div>
+  <body>
+    <ProductList/>
+  </body>
 </template>
+
 
 <style scoped>
 
