@@ -137,7 +137,7 @@ onMounted(() => {
 
 
       <!-- Sort Section -->
-      <h3 class="text-lg font-semibold mb-6">Sort</h3>
+      <h3 class="text-lg text-black font-semibold mb-6">Sort</h3>
       <div class="flex flex-col space-y-4">
         <!-- Sort by New/Old and Price -->
         <button
@@ -171,7 +171,7 @@ onMounted(() => {
       </div>
 
       <!-- Categories Section -->
-      <h3 class="text-lg font-semibold mt-6 mb-6">Categories</h3>
+      <h3 class="text-lg text-black font-semibold mt-6 mb-6">Categories</h3>
       <div class="flex flex-col space-y-4">
         <div v-for="category in categories" :key="category.id">
           <button
