@@ -15,29 +15,32 @@ const routes = [
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: Home,
+        meta: { requiresAuth: false }
     },
     {
       path: '/login',
       name: 'Login',
       component: Login,
-      meta: { hideHeaderFooter: true }
+      meta: { hideHeaderFooter: true, requiresAuth: false }
     },
     {
         path: '/about',
         name: 'About',
-        component: About
+        component: About,
+        meta: { requiresAuth: false }
     },
     {
         path: '/user',
         name: 'User',
-        component: UserPage
+        component: UserPage,
     },
     {
       path: '/user/:id/products',
       name: 'UserProducts',
       component: UserProductsPage,
-      props: true
+      props: true,
+      meta: { requiresAuth: false }
     },
     // {
     //   path: '/user/products',
@@ -54,18 +57,21 @@ const routes = [
         path: '/product/:id',
         name: 'Product',
         component: ProductPage,
-        props: true
+        props: true,
+        meta: { requiresAuth: false }
     },
     {
         path: '/user/:id',
         name: 'ForeignUser',
         component: ForeignUser,
-        props: true
+        props: true,
+        meta: { requiresAuth: false }
     },
     {
         path: '/users',
         name: 'Users',
-        component: ForeignUsers
+        component: ForeignUsers,
+        meta: { requiresAuth: false }
     }
 ];
 
