@@ -14,6 +14,7 @@ const error = ref('');
 const activeCategory = ref(null);
 const activeSort = ref("productId");
 const activeSortDirection = ref("DESC");
+const activeSearch = ref(null);
 
 const fetchProducts = async () => {
   try {
@@ -21,6 +22,9 @@ const fetchProducts = async () => {
 
     if (activeCategory.value !== null) {
       url += `&category=${activeCategory.value}`;
+    }
+    if (activeSearch.value !== null) {
+      url += `&name=${activeSearch.value}`;
     }
 
     const response = await axios.get(url);
@@ -82,6 +86,10 @@ const selectSortOption = (option) => {
   fetchProducts();
 };
 
+const handleSearch = () => {
+  fetchProducts();
+};
+
 const nextPage = () => {
   currentPage.value++;
   fetchProducts();
@@ -105,6 +113,29 @@ onMounted(() => {
   <div class="bg-white flex">
 
     <aside class="w-1/4 min-h-screen bg-white border-r border-gray-300 px-4 py-8">
+
+      <form class="mx-auto flex items-center space-x-2" @submit.prevent="handleSearch">
+        <div class="relative flex-1">
+          <input
+              type="search"
+              v-model="activeSearch"
+              id="default-search"
+              class="block w-full py-2 px-4 text-sm text-black border border-gray-500 rounded bg-gray-100 focus:outline-none focus:ring-0"
+              placeholder="Search..."
+          />
+        </div>
+        <button
+            type="submit"
+            class="flex items-center justify-center py-2 px-4 text-white bg-blue-600 rounded hover:bg-blue-700 hover:scale-110"
+        >
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 19l-4-4m0-7a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+      </form>
+
+
+
       <!-- Sort Section -->
       <h3 class="text-lg font-semibold mb-6">Sort</h3>
       <div class="flex flex-col space-y-4">
