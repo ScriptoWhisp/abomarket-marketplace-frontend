@@ -9,7 +9,7 @@ const props = defineProps({
 });
 
 const token = localStorage.getItem('user_token');
-const userId = getUserIdFromToken(token);
+let userId = -1;
 console.log(userId);
 
 const product = ref({});
@@ -21,6 +21,13 @@ const errorOperation = ref('');
 
 
 const fetchProduct = async () => {
+  try {
+    await axios.get('/api/users/profile')
+    userId = getUserIdFromToken(token);
+  } catch (err) {
+    localStorage.clear();
+  }
+
   try {
     const response = await axios.get(`/api/products/${props.id}`);
     console.log(response);
