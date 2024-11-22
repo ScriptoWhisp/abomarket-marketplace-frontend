@@ -12,7 +12,7 @@ const isRegister = ref(false);
 
 const login = async () => {
 
-  localStorage.removeItem('user_token');
+  localStorage.clear();
 
   try {
 
@@ -25,7 +25,7 @@ const login = async () => {
     console.log(response.data);
     error.value = response.data.error;
 
-    const token = response.data.jwttoken;
+    const token = response.data.jwtToken;
 
     localStorage.setItem('user_token', token);
 
