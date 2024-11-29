@@ -2,7 +2,7 @@
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import {getUserIdFromToken} from "@/helpers/JWTHelper.js";
-import ErrorAlert from "@/components/ErrorAlert.vue";
+import {triggerError} from "@/helpers/ErrorHelper.js";
 
 const props = defineProps({
   id: String
@@ -17,7 +17,6 @@ const category = ref("");
 const seller = ref({});
 let productImg = 'https://www.diskmat.ee/raamat12.gif'
 const error = ref({});
-const errorOperation = ref('');
 
 
 const fetchProduct = async () => {
@@ -37,8 +36,7 @@ const fetchProduct = async () => {
     await fetchCategory();
     await fetchSellerName();
   } catch (err) {
-    error.value = err.response.data;
-    errorOperation.value = 'fetching product';
+    triggerErrorCustom(err.response.data, 'fetching product');
   }
 };
 
@@ -48,8 +46,7 @@ const fetchCategory = async () => {
     console.log(response);
     category.value = response.data.name;
   } catch (err) {
-    error.value = err.response.data;
-    errorOperation.value = 'fetching category';
+    triggerErrorCustom(err.response.data, 'fetching category');
   }
 };
 
@@ -60,8 +57,7 @@ const fetchSellerName = async () => {
     console.log(response);
     seller.value = response.data;
   } catch (err) {
-    error.value = err.response.data;
-    errorOperation.value = 'fetching seller';
+    triggerErrorCustom(err.response.data, 'fetching seller');
   }
 };
 
@@ -79,8 +75,7 @@ const updateProduct = async () => {
     console.log(response);
     console.log('Product updated');
   } catch (err) {
-    error.value = err.response.data;
-    errorOperation.value = 'updating product';
+    triggerErrorCustom(err.response.data, 'updating product');
   }
 };
 
@@ -91,9 +86,12 @@ const deleteProduct = async () => {
     console.log('Product deleted');
     window.location.href = '/';
   } catch (err) {
-    error.value = err.response.data;
-    errorOperation.value = 'deleting product';
+    triggerErrorCustom(err.response.data, 'deleting product');
   }
+};
+
+const triggerErrorCustom = (err, operation) => {
+  triggerError('error while ' + operation + ': ' + err.message);
 };
 
 onMounted(fetchProduct);
@@ -129,7 +127,6 @@ onMounted(fetchProduct);
     <button type="button" @click="deleteProduct" data-modal-target="static-modal" data-modal-toggle="static-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
       Delete
     </button>
-    <ErrorAlert class="mt-5" v-if="error.message" :message="'error while ' + errorOperation + ': ' + error.message"/>
 
   </div>
   </body>

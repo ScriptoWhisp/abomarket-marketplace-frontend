@@ -2,12 +2,12 @@
 
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import {triggerError} from "@/helpers/ErrorHelper.js";
 
 const users = ref([]);
 const currentPage = ref(1);
 const pageSize = 4;
 const totalPages = ref(1);
-const error = ref('');
 
 const fetchUsers = async () => {
   try {
@@ -23,7 +23,7 @@ const fetchUsers = async () => {
     }));
     // totalPages.value = response.data.totalPages;
   } catch (err) {
-    error.value = 'Error fetching users: ' + err.message;
+    triggerError('Error fetching users: ' + err.message);
   }
 };
 
@@ -42,8 +42,6 @@ onMounted(fetchUsers);
 </script>
 
 <template>
-
-  <div v-if="error" class="error-message">{{ error }}</div>
 
   <div class="bg-white h-dvh">
     <div class="grid grid-cols-5 gap-y-3 p-10">

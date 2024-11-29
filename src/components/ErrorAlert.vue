@@ -31,11 +31,23 @@ watch(
 </script>
 
 <template>
-  <div v-if="visible" class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-    <span class="font-medium">Error: {{props.message}}</span>
-  </div>
+  <transition name="slide-up">
+    <div
+        v-if="visible"
+        class="fixed bottom-5 left-0 right-0 flex justify-self-center bg-red-50 text-red-800 px-4 py-3 rounded-lg shadow-lg z-50 transition-transform duration-500 ease-out"
+        role="alert"
+    >
+      <span class="font-medium">Error: {{ props.message }}</span>
+    </div>
+  </transition>
 </template>
 
 <style scoped>
-
+.slide-up-enter-active {
+  @apply animate-slide-up;
+}
+.slide-up-leave-active {
+  @apply animate-slide-down;
+}
 </style>
+

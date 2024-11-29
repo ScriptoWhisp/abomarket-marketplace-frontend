@@ -3,6 +3,7 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { getUserIdFromToken } from "@/helpers/JWTHelper";
+import {triggerError} from "@/helpers/ErrorHelper.js";
 
 const props = defineProps({
   id: String
@@ -19,7 +20,6 @@ const currentPage = ref(1);
 const pageSize = 4;
 const totalPages = ref(1);
 
-const error = ref('');
 
 const fetchProducts = async () => {
   try {
@@ -33,7 +33,7 @@ const fetchProducts = async () => {
     }));
     totalPages.value = response.data.totalPages;
   } catch (err) {
-    error.value = 'Error fetching products: ' + err.message;
+    triggerError('Error fetching products: ' + err.message);
   }
 };
 
@@ -53,7 +53,6 @@ onMounted(fetchProducts);
 </script>
 
 <template>
-  <div v-if="error" class="error-message">{{ error }}</div>
 
   <div class="bg-white">
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

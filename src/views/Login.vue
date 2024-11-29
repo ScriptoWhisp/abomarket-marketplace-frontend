@@ -3,10 +3,10 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import {triggerError} from "@/helpers/ErrorHelper.js";
 
 const email = ref('');
 const password = ref('');
-const error = ref('');
 const router = useRouter();
 const isRegister = ref(false);
 
@@ -23,7 +23,6 @@ const login = async () => {
 
 
     console.log(response.data);
-    error.value = response.data.error;
 
     const token = response.data.jwtToken;
 
@@ -36,7 +35,7 @@ const login = async () => {
     await router.push('/');
 
   } catch (err) {
-    error.value = 'Invalid email or password';
+    triggerError(err.response.data.message);
   }
 };
 
@@ -54,7 +53,7 @@ const register = async () => {
     await login()
 
   } catch (err) {
-    error.value = 'Invalid email or password';
+    triggerError(err.response.data.message);
   }
 };
 
@@ -63,7 +62,6 @@ const register = async () => {
 <template>
   <body class="bg-white">
 
-    <div v-if="error" class="error-message text-black">{{ error }}</div>
 
 
     <div v-if="isRegister" class="flex min-h-full flex-col content-center justify-center px-6 py-12 lg:px-8">
