@@ -24,8 +24,6 @@ router.beforeEach((to, from, next) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     next('/login')
   } else {
-    // Allow access
-    delete axios.defaults.headers.common['Authorization']
     next()
   }
 })
