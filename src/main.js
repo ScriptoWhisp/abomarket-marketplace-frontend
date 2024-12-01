@@ -24,14 +24,17 @@ router.beforeEach((to, from, next) => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     next('/login')
   } else {
-    // Allow access
-    delete axios.defaults.headers.common['Authorization']
     next()
   }
 })
 
 
 const app = createApp(App)
+
+app.config.globalProperties.$showError = (message) => {
+  const event = new CustomEvent("global-error", { detail: message });
+  window.dispatchEvent(event);
+};
 
 app.provide('axios', axios)
 

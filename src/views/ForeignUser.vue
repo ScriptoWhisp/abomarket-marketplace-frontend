@@ -3,6 +3,7 @@
 import axios from "axios";
 import {onMounted, ref} from "vue";
 import { useRouter } from 'vue-router';
+import {triggerError} from "@/helpers/ErrorHelper.js";
 
 const email = ref('');
 const firstName = ref('');
@@ -10,7 +11,6 @@ const lastName = ref('');
 const location = ref('');
 const phone = ref('');
 
-const error = ref('');
 
 const props = defineProps({
   id: String
@@ -28,8 +28,7 @@ const getForeignUsersData = async () => {
     phone.value = response.data.phone;
 
   } catch (ex) {
-    error.value = ex;
-    console.log(ex);
+    triggerError(ex);
   }
 
 }
@@ -39,7 +38,6 @@ onMounted(getForeignUsersData)
 
 <template>
 
-  <div v-if="error" class="error-message">{{ error }}</div>
   <div class="grid grid-cols-5 bg-white">
     <div class="py-5 px-5 sm:px-20 col-start-2 col-span-3">
       <div class="px-4 sm:px-0">

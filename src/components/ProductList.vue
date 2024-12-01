@@ -2,6 +2,7 @@
 
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import {triggerError} from "@/helpers/ErrorHelper.js";
 
 const productImg = 'https://www.diskmat.ee/raamat12.gif'
 const products = ref([]);
@@ -10,7 +11,6 @@ const pageSize = 10;
 const totalPages = ref(1);
 const categories = ref([])
 
-const error = ref('');
 const activeCategory = ref(null);
 const activeSort = ref("productId");
 const activeSortDirection = ref("DESC");
@@ -37,7 +37,7 @@ const fetchProducts = async () => {
     }));
     totalPages.value = response.data.totalPages;
   } catch (err) {
-    error.value = 'Error fetching products: ' + err.message;
+    triggerError(err.message);
   }
 };
 
@@ -50,7 +50,7 @@ const fetchCategories = async () => {
       name: category.name
     }));
   } catch (err) {
-    error.value = 'Error fetching categories: ' + err.message;
+    triggerError('Error fetching categories: ' + err.message);
   }
 };
 
@@ -108,7 +108,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="error" class="error-message">{{ error }}</div>
 
   <div class="bg-white flex">
 

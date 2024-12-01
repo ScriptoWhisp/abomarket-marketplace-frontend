@@ -4,6 +4,7 @@ import axios from "axios";
 import {onMounted, ref} from "vue";
 import { useRouter } from 'vue-router';
 import UserProfileSide from "@/components/UserProfileSide.vue";
+import {triggerError} from "@/helpers/ErrorHelper.js";
 
 const email = ref('');
 const firstName = ref('');
@@ -18,7 +19,6 @@ const initialLocation = ref('');
 const initialPhone = ref('');
 
 const router = useRouter();
-const error = ref('');
 
 const getUsersData = async () => {
 
@@ -45,7 +45,7 @@ const getUsersData = async () => {
 
   } catch (ex) {
     await router.push('/login');
-    error.value = ex;
+    triggerError(ex);
     console.log(ex);
   }
 
@@ -62,7 +62,7 @@ const updateData = async () => {
     console.log(response);
     await router.push('/user');
   } catch (err) {
-    error.value = 'Error updating user: ' + err.message;
+    triggerError('Error updating user: ' + err.message);
   }
 }
 
@@ -81,7 +81,6 @@ onMounted(getUsersData)
 <template>
 
   <body>
-  <div v-if="error" class="error-message">{{ error }}</div>
 
   <div class="flex justify-left h-dvh">
       <UserProfileSide/>
