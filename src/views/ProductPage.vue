@@ -79,6 +79,25 @@ const updateProduct = async () => {
   }
 };
 
+
+const testBuyOneProduct = async () => {
+  try {
+    const user_data = ref({})
+    user_data.value = (await axios.get(`/api/users/${userId}`)).data
+    console.log(user_data)
+    const response = await axios.post(`/api/order_items`, {
+      orderId: user_data.value.unfinishedOrderId,
+      productId: product.value.id,
+      quantity: 1,
+      priceAtTimeOfOrder: product.value.price
+    });
+    console.log(response);
+    console.log('Product added to cart (hopefully)');
+  } catch (err) {
+    triggerErrorCustom(err.response.data, 'test buying one product');
+  }
+};
+
 const deleteProduct = async () => {
   try {
     const response = await axios.delete(`/api/products/${props.id}`);
@@ -126,6 +145,9 @@ onMounted(fetchProduct);
     <!-- Delete product -->
     <button type="button" @click="deleteProduct" data-modal-target="static-modal" data-modal-toggle="static-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
       Delete
+    </button>
+    <button type="button" @click="testBuyOneProduct" data-modal-target="static-modal" data-modal-toggle="static-modal" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+      add one to cart
     </button>
 
   </div>
