@@ -9,6 +9,7 @@ import ProductCreatePage from '@/views/ProductCreatePage.vue';
 import ProductPage from '@/views/ProductPage.vue';
 import ForeignUser from '@/views/ForeignUser.vue';
 import ForeignUsers from "@/views/ForeignUsers.vue";
+import Cart from "@/views/Cart.vue";
 
 
 const routes = [
@@ -72,6 +73,12 @@ const routes = [
         name: 'Users',
         component: ForeignUsers,
         meta: { requiresAuth: false }
+    },
+    {
+        path: '/user/cart',
+        name: 'Cart',
+        component: Cart,
+        meta: { requiresAuth: true}
     }
 ];
 
