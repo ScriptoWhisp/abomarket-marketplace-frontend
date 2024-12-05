@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import {ref, onMounted, computed} from "vue";
 import axios from "axios";
 import { getUserIdFromToken } from "@/helpers/JWTHelper";
 import { triggerError } from "@/helpers/ErrorHelper.js";
@@ -19,6 +19,10 @@ const pageSize = 4;
 const totalPages = ref(1);
 
 const productList = ref([]);
+
+const sumOfPrices = computed(() => {
+  return productList.value.reduce((sum, product) => sum + product.price * product.quantity, 0);
+});
 
 const fetchCart = async () => {
   try {
@@ -44,18 +48,30 @@ const fetchCart = async () => {
 };
 
 
+
+
 const convertCartToProductList = async () => {
   try {
-    console.log(cart);
+    const tempProductList = [];
     for (const element of cart.value) {
       const response = await axios.get(`/api/products/${element.productId}`);
-      let responseCopy = response.data;
-      responseCopy.quantity = element.quantity;
-      productList.value.push(response.data);
+      const product = { ...response.data, quantity: element.quantity };
+      tempProductList.push(product);
     }
-    console.log(productList);
+    productList.value = tempProductList; // Update once after processing
   } catch (err) {
     triggerError('Error converting cart: ' + err.message);
+  }
+};
+
+
+const deleteProduct = async () => {
+  try {
+    const response = await axios.delete(`/api/order_items/${cart.value[0].id}`);
+    console.log(response);
+    window.location.reload();
+  } catch (err) {
+    triggerError('Error deleting product: ' + err.message);
   }
 };
 
@@ -80,6 +96,7 @@ onMounted(fetchCart); // Pass function reference
 
 
       <h2 class="text-black text-5xl">Cart</h2>
+      <h3 class="text-black text-4xl">Total price: {{ sumOfPrices }}</h3>
 
       <!-- filter stuff goes here -->
 
@@ -89,7 +106,7 @@ onMounted(fetchCart); // Pass function reference
         <router-link to="/user" class="text-black text-left hover:underline">Back to profile</router-link>
       </div>
 
-      <div v-if="cart.length === 0 || error" class="text-2xl text-gray-500 text-center">You have no items in cart</div>
+      <div v-if="cart.length === 0" class="text-2xl text-gray-500 text-center">You have no items in cart</div>
 
       <div v-else>
         <div class="grid grid-cols-1 gap-x-6 gap-y-10 mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
@@ -104,8 +121,14 @@ onMounted(fetchCart); // Pass function reference
               <p class="mt-1 text-lg font-medium text-gray-900">Price: {{ product.price }}</p>
               <h3 class="text-sm text-gray-700">Item name: {{ product.name }}</h3>
               <h3 class="text-sm text-gray-700">Quantity: {{ product.quantity }}</h3>
+              <h3 class="text-sm text-gray-700">Total price: {{ product.price * product.quantity }}</h3>
               <button v-if="userId == props.id" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Edit</button>
             </a>
+
+            <!-- Remove item from cart -->
+            <button type="button" @click="deleteProduct" data-modal-target="static-modal" data-modal-toggle="static-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+              Remove from cart
+            </button>
           </div>
         </div>
 
