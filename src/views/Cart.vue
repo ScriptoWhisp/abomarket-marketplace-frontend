@@ -19,7 +19,6 @@ const pageSize = 4;
 const totalPages = ref(1);
 
 const productList = ref([]);
-const itemQuantities = {}
 
 const fetchCart = async () => {
   try {
@@ -50,9 +49,9 @@ const convertCartToProductList = async () => {
     console.log(cart);
     for (const element of cart.value) {
       const response = await axios.get(`/api/products/${element.productId}`);
+      let responseCopy = response.data;
+      responseCopy.quantity = element.quantity;
       productList.value.push(response.data);
-
-      itemQuantities[element.productId] = element.quantity;
     }
     console.log(productList);
   } catch (err) {
@@ -104,7 +103,7 @@ onMounted(fetchCart); // Pass function reference
               </div>
               <p class="mt-1 text-lg font-medium text-gray-900">Price: {{ product.price }}</p>
               <h3 class="text-sm text-gray-700">Item name: {{ product.name }}</h3>
-              <h3 class="text-sm text-gray-700">Quantity: {{ itemQuantities[product.id] }}</h3>
+              <h3 class="text-sm text-gray-700">Quantity: {{ product.quantity }}</h3>
               <button v-if="userId == props.id" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Edit</button>
             </a>
           </div>
