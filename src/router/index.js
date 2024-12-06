@@ -10,6 +10,8 @@ import ProductPage from '@/views/ProductPage.vue';
 import ForeignUser from '@/views/ForeignUser.vue';
 import ForeignUsers from "@/views/ForeignUsers.vue";
 import Cart from "@/views/Cart.vue";
+import OrderPayment from "@/views/OrderPayment.vue";
+import Orders from "@/views/Orders.vue";
 
 
 const routes = [
@@ -78,6 +80,18 @@ const routes = [
         path: '/user/cart',
         name: 'Cart',
         component: Cart,
+        meta: { requiresAuth: true}
+    },
+    {
+        path: '/payment',
+        name: 'Payment',
+        component: OrderPayment,
+        meta: { requiresAuth: true}
+    },
+    {
+        path: '/orders',
+        name: 'Orders',
+        component: Orders,
         meta: { requiresAuth: true}
     }
 ];

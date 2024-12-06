@@ -75,6 +75,10 @@ const deleteProduct = async () => {
   }
 };
 
+const redirectToPayment = () => {
+  window.location.href = '/payment';
+};
+
 const nextPage = () => {
   currentPage.value++;
   fetchCart();
@@ -97,6 +101,11 @@ onMounted(fetchCart); // Pass function reference
 
       <h2 class="text-black text-5xl">Cart</h2>
       <h3 class="text-black text-4xl">Total price: {{ sumOfPrices }}</h3>
+
+      <!-- Proceed to payment -->
+      <button type="button" @click="redirectToPayment" data-modal-target="static-modal" data-modal-toggle="static-modal" class="text-white bg-fuchsia-700 hover:bg-fuchsia-800 focus:ring-4 focus:outline-none focus:ring-fuchsia-700 dark:focus:ring-fuchsia-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+        Proceed to payment
+      </button>
 
       <!-- filter stuff goes here -->
 

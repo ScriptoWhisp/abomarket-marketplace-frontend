@@ -29,6 +29,11 @@ const logout = async () => {
         </a>
       </li>
       <li>
+        <a href="/orders" class="flex items-center p-2 text-gray-900 rounded-lg focus:bg-gray-300 hover:bg-gray-300 group">
+          <span class="ms-3">Orders</span>
+        </a>
+      </li>
+      <li>
         <a href="/user/createproduct" class="flex items-center p-2 text-gray-900 rounded-lg focus:bg-gray-300 hover:bg-gray-300 group">
           <span class="ms-3">Create Product</span>
         </a>
