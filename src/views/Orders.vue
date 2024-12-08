@@ -1,12 +1,8 @@
 <script setup>
-import {ref, onMounted, computed} from "vue";
+import {ref, onMounted} from "vue";
 import axios from "axios";
 import { getUserIdFromToken } from "@/helpers/JWTHelper";
 import { triggerError } from "@/helpers/ErrorHelper.js";
-
-const props = defineProps({
-  id: String
-});
 
 const token = localStorage.getItem('user_token');
 const userId = getUserIdFromToken(token);
@@ -94,6 +90,7 @@ onMounted(fetchOrders); // Pass function reference
           <div>
             <h3 class="text-black text-3xl">Order ID: {{ order.id }}</h3>
             <p class="text-black text-2xl">Order status: {{ statusIdToName[order.statusId] }}</p>
+            <a :href="'/orders/' + order.id" class="text-blue-800 text-2xl hover:underline">View order</a>
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ import ForeignUsers from "@/views/ForeignUsers.vue";
 import Cart from "@/views/Cart.vue";
 import OrderPayment from "@/views/OrderPayment.vue";
 import Orders from "@/views/Orders.vue";
+import OrderItems from "@/views/OrderItems.vue";
 
 
 const routes = [
@@ -92,6 +93,13 @@ const routes = [
         path: '/orders',
         name: 'Orders',
         component: Orders,
+        meta: { requiresAuth: true}
+    },
+    {
+        path: '/orders/:id',
+        name: 'SpecificOrder',
+        component: OrderItems,
+        props: true,
         meta: { requiresAuth: true}
     }
 ];
