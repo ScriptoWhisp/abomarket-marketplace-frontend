@@ -57,7 +57,8 @@ const updateData = async () => {
       email: email.value,
       firstName: firstName.value,
       lastName: lastName.value,
-      location: location.value
+      location: location.value,
+      phone: phone.value
     });
     console.log(response);
     await router.push('/user');

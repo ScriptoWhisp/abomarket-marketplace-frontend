@@ -13,7 +13,7 @@ const userId = getUserIdFromToken(token);
 console.log(userId);
 
 const productImg = 'https://www.diskmat.ee/raamat12.gif';
-const cart = ref([]);
+const order = ref([]);
 const currentPage = ref(1);
 const pageSize = 4;
 const totalPages = ref(1);
@@ -24,14 +24,12 @@ const sumOfPrices = computed(() => {
   return productList.value.reduce((sum, product) => sum + product.price * product.quantity, 0);
 });
 
-const fetchCart = async () => {
+const fetchOrderitems = async () => {
   try {
-    const userData = ref({});
-    const userResponse = await axios.get('/api/users/' + userId);
-    userData.value = userResponse.data;
-    const response = await axios.get(`/api/order_items?orderId=${userData.value.unfinishedOrderId}&pageNo=${currentPage.value - 1}&pageSize=${pageSize}`);
+    console.log(props);
+    const response = await axios.get(`/api/order_items?orderId=${props.id}&pageNo=${currentPage.value - 1}&pageSize=${pageSize}`);
 
-    cart.value = response.data.content.map(cartItem => ({
+    order.value = response.data.content.map(cartItem => ({
       id: cartItem.id,
       productId: cartItem.productId,
       quantity: cartItem.quantity,
@@ -53,7 +51,7 @@ const fetchCart = async () => {
 const convertCartToProductList = async () => {
   try {
     const tempProductList = [];
-    for (const element of cart.value) {
+    for (const element of order.value) {
       const response = await axios.get(`/api/products/${element.productId}`);
       const product = { ...response.data, quantity: element.quantity };
       tempProductList.push(product);
@@ -64,32 +62,21 @@ const convertCartToProductList = async () => {
   }
 };
 
-
-const deleteProduct = async () => {
-  try {
-    const response = await axios.delete(`/api/order_items/${cart.value[0].id}`);
-    console.log(response);
-    window.location.reload();
-  } catch (err) {
-    triggerError('Error deleting product: ' + err.message);
-  }
-};
-
 const redirectToPayment = () => {
   window.location.href = '/payment';
 };
 
 const nextPage = () => {
   currentPage.value++;
-  fetchCart();
+  fetchOrderitems();
 };
 
 const previousPage = () => {
   currentPage.value--;
-  fetchCart();
+  fetchOrderitems();
 };
 
-onMounted(fetchCart); // Pass function reference
+onMounted(fetchOrderitems); // Pass function reference
 </script>
 
 
@@ -115,7 +102,7 @@ onMounted(fetchCart); // Pass function reference
         <router-link to="/user" class="text-black text-left hover:underline">Back to profile</router-link>
       </div>
 
-      <div v-if="cart.length === 0" class="text-2xl text-gray-500 text-center">You have no items in cart</div>
+      <div v-if="order.length === 0" class="text-2xl text-gray-500 text-center">This order (for some reason) is empty.</div>
 
       <div v-else>
         <div class="grid grid-cols-1 gap-x-6 gap-y-10 mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
@@ -131,13 +118,7 @@ onMounted(fetchCart); // Pass function reference
               <h3 class="text-sm text-gray-700">Item name: {{ product.name }}</h3>
               <h3 class="text-sm text-gray-700">Quantity: {{ product.quantity }}</h3>
               <h3 class="text-sm text-gray-700">Total price: {{ product.price * product.quantity }}</h3>
-              <button v-if="userId == props.id" type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Edit</button>
             </a>
-
-            <!-- Remove item from cart -->
-            <button type="button" @click="deleteProduct" data-modal-target="static-modal" data-modal-toggle="static-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-              Remove from cart
-            </button>
           </div>
         </div>
 
