@@ -1,4 +1,10 @@
 <script setup>
+import { ref, onMounted } from "vue";
+import {useRouter} from "vue-router";
+import {getIsAdminFromToken} from "@/helpers/JWTHelper.js";
+
+const router = useRouter();
+const isAdmin = getIsAdminFromToken(localStorage.getItem('user_token'));
 
 </script>
 
@@ -19,6 +25,9 @@
           </li>
           <li>
             <a href="#" class="hover:underline">Contact</a>
+          </li>
+          <li v-if="isAdmin">
+            <a href="/admin" class="hover:underline">Admin</a>
           </li>
         </ul>
       </div>

@@ -45,7 +45,7 @@ const fetchCategories = async () => {
   try {
     const response = await axios.get(`/api/categories`);
     console.log(response);
-    categories.value = response.data.map(category => ({
+    categories.value = response.data.content.map(category => ({
       id: category.id,
       name: category.name
     }));

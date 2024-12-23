@@ -13,6 +13,7 @@ import Cart from "@/views/Cart.vue";
 import OrderPayment from "@/views/OrderPayment.vue";
 import Orders from "@/views/Orders.vue";
 import OrderItems from "@/views/OrderItems.vue";
+import AdminPanel from "@/views/AdminPanel.vue";
 
 
 const routes = [
@@ -100,6 +101,12 @@ const routes = [
         name: 'SpecificOrder',
         component: OrderItems,
         props: true,
+        meta: { requiresAuth: true}
+    },
+    {
+        path: '/admin',
+        name: 'AdminPanel',
+        component: AdminPanel,
         meta: { requiresAuth: true}
     }
 ];
