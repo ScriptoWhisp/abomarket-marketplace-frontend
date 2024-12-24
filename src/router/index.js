@@ -1,7 +1,6 @@
 // src/routes/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/views/Home.vue';
-import About from '@/views/About.vue';
 import Login from '@/views/Login.vue';
 import UserPage from '@/views/UserPage.vue';
 import UserProductsPage from '@/views/UserProductsPage.vue';
@@ -28,12 +27,6 @@ const routes = [
       name: 'Login',
       component: Login,
       meta: { hideHeaderFooter: true, requiresAuth: false }
-    },
-    {
-        path: '/about',
-        name: 'About',
-        component: About,
-        meta: { requiresAuth: false }
     },
     {
         path: '/user',
