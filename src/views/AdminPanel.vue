@@ -22,6 +22,7 @@ const pageSize = 10
 
 const openDelete = ref(false)
 const openManage = ref(false)
+const openCreate = ref(false)
 
 const editItemId = ref(null)
 const editData = ref({})
@@ -239,7 +240,19 @@ const updateItem = async () => {
       await axios.patch(`/api/${selectedCategory.value}/${editItemId.value}`, editData.value)
     }
     openManage.value = false
-    handleSearch()
+    await handleSearch()
+  } catch (err) {
+    triggerError("Error updating item: " + err.message)
+  }
+}
+
+const createItem = async () => {
+  try {
+    console.log(editData.value)
+    console.log(`/api/${selectedCategory.value}`)
+    await axios.post(`/api/${selectedCategory.value}`, editData.value)
+    openCreate.value = false
+    await handleSearch()
   } catch (err) {
     triggerError("Error updating item: " + err.message)
   }
@@ -345,7 +358,100 @@ const prevOrderItemsPage = () => {
       </form>
     </div>
 
+    <div  class="px-10"></div>
+
     <div class="grid grid-cols-1 gap-y-3 p-10">
+      <TransitionRoot :show="openCreate" as="div">
+        <Dialog class="relative z-10 text-black" @close="openCreate = false">
+          <TransitionChild
+              as="div"
+              enter="ease-out duration-300"
+              enter-from="opacity-0"
+              enter-to="opacity-100"
+              leave="ease-in duration-200"
+              leave-from="opacity-100"
+              leave-to="opacity-0"
+          >
+            <div class="fixed inset-0 bg-gray-500/75 transition-opacity"></div>
+          </TransitionChild>
+
+          <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <TransitionChild
+                  as="div"
+                  enter="ease-out duration-300"
+                  enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                  enter-to="opacity-100 translate-y-0 sm:scale-100"
+                  leave="ease-in duration-200"
+                  leave-from="opacity-100 translate-y-0 sm:scale-100"
+                  leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <DialogPanel
+                    class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all
+                       sm:my-8 sm:w-full sm:max-w-2xl"
+                >
+                  <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start w-full">
+                      <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                        <DialogTitle as="h3" class="text-xl font-semibold text-gray-900">
+                          Create {{ selectedCategory }}
+                        </DialogTitle>
+
+                        <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+                          <div
+                              v-for="(field, idx) in categoryFields[selectedCategory]"
+                              :key="idx"
+                              class="sm:col-span-1"
+                          >
+                            <label :for="field.name" class="block text-sm font-medium text-gray-900">
+                              {{ field.label }}
+                            </label>
+                            <div class="mt-2">
+                              <input
+                                  :id="field.name"
+                                  v-model="editData[field.name]"
+                                  :type="field.type"
+                                  class="block w-full rounded-md border-0 p-2.5 text-gray-900 shadow-sm ring-1 ring-inset
+                                     ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                    <button
+                        type="button"
+                        class="inline-flex w-full justify-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm
+                           sm:ml-3 sm:w-auto"
+                        @click="createItem"
+                    >
+                      Create
+                    </button>
+                    <button
+                        type="button"
+                        class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1
+                           ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                        @click="openCreate = false"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </DialogPanel>
+              </TransitionChild>
+            </div>
+          </div>
+        </Dialog>
+      </TransitionRoot>
+      <button
+          v-if="selectedCategory === 'categories' || selectedCategory === 'statuses'"
+          @click="openCreate = true"
+          class="py-2 px-4 text-white bg-blue-600 rounded hover:bg-blue-700"
+      >
+        Add
+      </button>
       <div v-for="obj in objects" :key="obj.id" class="group bg-gray-100 rounded-lg">
         <div class="flex min-w-0 min-h-12 gap-y-4 m-2">
           <div class="min-w-0 flex-auto">
