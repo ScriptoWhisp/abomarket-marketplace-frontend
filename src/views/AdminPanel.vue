@@ -56,7 +56,6 @@ const categoryFields = {
     { name: "imageUrl", label: "Image URL", type: "text" },
     { name: "categoryId", label: "Category ID", type: "number" },
     { name: "sellerId", label: "Seller ID", type: "number" },
-    { name: "stockQuantity", label: "Quantity", type: "number" },
   ],
   statuses: [
     { name: "name", label: "Status Name", type: "text" }
@@ -230,6 +229,11 @@ const openManageDialog = async (obj) => {
     return
   }
   openManage.value = true
+}
+
+const openDeleteDialog = async (obj) => {
+  editItemId.value = obj.id
+  openDelete.value = true
 }
 
 const updateItem = async () => {
@@ -465,7 +469,7 @@ const prevOrderItemsPage = () => {
             </button>
             <button
                 class="group text-gray-900 hover:text-white hover:bg-red-500 border-2 border-red-500 rounded-lg"
-                @click="openDelete = true"
+                @click="openDeleteDialog(obj)"
             >
               <p class="text-sm/6 font-semibold m-3 mx-6">Delete</p>
             </button>
@@ -525,7 +529,7 @@ const prevOrderItemsPage = () => {
                   <button
                       type="button"
                       class="inline-flex w-full justify-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                      @click="deleteItem(editItemId.value)"
+                      @click="deleteItem(editItemId)"
                   >
                     Delete
                   </button>
