@@ -1,7 +1,6 @@
 // src/routes/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/views/Home.vue';
-import About from '@/views/About.vue';
 import Login from '@/views/Login.vue';
 import UserPage from '@/views/UserPage.vue';
 import UserProductsPage from '@/views/UserProductsPage.vue';
@@ -9,6 +8,11 @@ import ProductCreatePage from '@/views/ProductCreatePage.vue';
 import ProductPage from '@/views/ProductPage.vue';
 import ForeignUser from '@/views/ForeignUser.vue';
 import ForeignUsers from "@/views/ForeignUsers.vue";
+import Cart from "@/views/Cart.vue";
+import OrderPayment from "@/views/OrderPayment.vue";
+import Orders from "@/views/Orders.vue";
+import OrderItems from "@/views/OrderItems.vue";
+import AdminPanel from "@/views/AdminPanel.vue";
 
 
 const routes = [
@@ -23,12 +27,6 @@ const routes = [
       name: 'Login',
       component: Login,
       meta: { hideHeaderFooter: true, requiresAuth: false }
-    },
-    {
-        path: '/about',
-        name: 'About',
-        component: About,
-        meta: { requiresAuth: false }
     },
     {
         path: '/user',
@@ -72,6 +70,37 @@ const routes = [
         name: 'Users',
         component: ForeignUsers,
         meta: { requiresAuth: false }
+    },
+    {
+        path: '/user/cart',
+        name: 'Cart',
+        component: Cart,
+        meta: { requiresAuth: true}
+    },
+    {
+        path: '/payment',
+        name: 'Payment',
+        component: OrderPayment,
+        meta: { requiresAuth: true}
+    },
+    {
+        path: '/orders',
+        name: 'Orders',
+        component: Orders,
+        meta: { requiresAuth: true}
+    },
+    {
+        path: '/orders/:id',
+        name: 'SpecificOrder',
+        component: OrderItems,
+        props: true,
+        meta: { requiresAuth: true}
+    },
+    {
+        path: '/admin',
+        name: 'AdminPanel',
+        component: AdminPanel,
+        meta: { requiresAuth: true}
     }
 ];
 

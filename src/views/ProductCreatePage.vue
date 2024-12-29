@@ -3,7 +3,8 @@ import {onMounted, ref} from "vue";
 import axios from "axios";
 import {getUserIdFromToken} from "@/helpers/JWTHelper.js";
 import UserProfileSide from "@/components/UserProfileSide.vue";
-import ErrorAlert from "@/components/ErrorAlert.vue";
+import {triggerError} from "@/helpers/ErrorHelper.js";
+
 
 const props = defineProps({
   id: String
@@ -14,7 +15,6 @@ const userId = getUserIdFromToken(token);
 console.log(userId);
 
 const product = ref({});
-const errorObj = ref({});
 
 const createProduct = async () => {
   try {
@@ -30,7 +30,7 @@ const createProduct = async () => {
     console.log('Product created');
     window.location.href = userId + `/products`;
   } catch (err) {
-    errorObj.value = err.response.data;
+    triggerError(err.response.data.message);
   }
 };
 
@@ -55,7 +55,6 @@ const createProduct = async () => {
       <label for="product-image" class="block mb-2 text-sm font-medium text-gray-900 ">Image URL</label>
       <input type="text" id="product-image" class="block w-full rounded-md border-0 p-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6" v-model="product.imageURL">
       <button @click="createProduct" class="mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create</button>
-      <ErrorAlert class="mt-5" v-if="errorObj.message" :message="errorObj.message"/>
     </div>
     <div class="bg-white w-1/4"></div>
   </div>

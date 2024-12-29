@@ -31,6 +31,11 @@ router.beforeEach((to, from, next) => {
 
 const app = createApp(App)
 
+app.config.globalProperties.$showError = (message) => {
+  const event = new CustomEvent("global-error", { detail: message });
+  window.dispatchEvent(event);
+};
+
 app.provide('axios', axios)
 
 app.use(router)
