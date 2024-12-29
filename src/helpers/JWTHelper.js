@@ -9,3 +9,14 @@ export function getUserIdFromToken(token) {
         return -1;
     }
 }
+
+export function getIsAdminFromToken(token) {
+    try {
+        console.log("Decoding JWT", token);
+        if (!token) return false;
+        const decodedToken = jwtDecode(token);
+        return decodedToken.roles[0].authority === 'ROLE_ADMIN'; // Access the `role` claim
+    } catch (error) {
+        return false;
+    }
+}

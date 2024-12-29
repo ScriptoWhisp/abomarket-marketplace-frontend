@@ -1,4 +1,10 @@
 <script setup>
+import { ref, onMounted } from "vue";
+import {useRouter} from "vue-router";
+import {getIsAdminFromToken} from "@/helpers/JWTHelper.js";
+
+const router = useRouter();
+const isAdmin = getIsAdminFromToken(localStorage.getItem('user_token'));
 
 </script>
 
@@ -8,17 +14,8 @@
       <div class="sm:flex sm:items-center sm:justify-between">
         <a href="#" class="flex items-center mb-4 sm:mb-0 space-x-3 text-3xl text-white font-extrabold rtl:space-x-reverse">abomarket</a>
         <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-blue sm:mb-0 dark:text-gray-400">
-          <li>
-            <a href="#" class="hover:underline me-4 md:me-6">About</a>
-          </li>
-          <li>
-            <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
-          </li>
-          <li>
-            <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
-          </li>
-          <li>
-            <a href="#" class="hover:underline">Contact</a>
+          <li v-if="isAdmin">
+            <a href="/admin" class="hover:underline">Admin</a>
           </li>
         </ul>
       </div>
