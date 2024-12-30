@@ -120,11 +120,12 @@ onMounted(fetchCart); // Pass function reference
       <div v-else>
         <div class="grid grid-cols-1 gap-x-6 gap-y-10 mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           <div v-for="product in productList">
+            {{console.log(product)}}
             <a :key="product.id" :href="'/product/' + product.id" class="group">
 
               <div
                   class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                <img v-if="product.imageURL" :src="product.imageURL" :alt="productImg" class="h-full w-full object-cover object-center group-hover:opacity-75" />
+                <img v-if="product.imageUrl" :src="product.imageUrl" :alt="productImg" class="h-full w-full object-cover object-center group-hover:opacity-75" />
                 <img v-else :src="productImg" :alt="productImg" class="h-full w-full object-cover object-center group-hover:opacity-75" />
               </div>
               <p class="mt-1 text-lg font-medium text-gray-900">Price: {{ product.price }}</p>

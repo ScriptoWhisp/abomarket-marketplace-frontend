@@ -137,7 +137,8 @@ onMounted(fetchCart); // Pass function reference
               <p class="text-2xl text-black">Quantity: {{ product.quantity }}</p>
             </div>
             <div>
-              <img :src="productImg" alt="description" class="h-auto w-1/2">
+              <img v-if="product.imageUrl" :src="product.imageUrl" alt="description" class="h-auto w-1/2">
+              <img v-else :src="productImg" alt="description" class="h-auto w-1/2">
             </div>
           </div>
         </div>
