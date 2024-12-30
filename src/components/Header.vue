@@ -8,9 +8,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
-import SearchBar from '@/components/SearchBar.vue'
 import {useRouter} from "vue-router";
-import Footer from "@/components/Footer.vue";
 
 
 const router = useRouter();
@@ -36,9 +34,6 @@ const mobileMenuOpen = ref(false)
       <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         <div class="hidden lg:flex justify-left items-center">
           <router-link to="/" class="font-extrabold text-white text-5xl">abo.</router-link>
-        </div>
-        <div class="justify-self-center items-center lg:w-1/2 w-full">
-          <SearchBar/>
         </div>
         <div class="hidden lg:flex justify-right items-center">
           <a href="#" @click="toPage" class="text-sm font-semibold text-white text-right">Account</a>

@@ -86,7 +86,7 @@ onMounted(fetchOrderitems); // Pass function reference
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 
 
-      <h2 class="text-black text-5xl">Cart</h2>
+      <h2 class="text-black text-5xl">Your order {{ props.id }}</h2>
       <h3 class="text-black text-4xl">Total price: {{ sumOfPrices }}</h3>
 
       <!-- Proceed to payment -->
